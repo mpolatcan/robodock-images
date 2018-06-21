@@ -1,0 +1,14 @@
+version: "3.0"
+services:
+  redis:
+    image: redis-cluster:4.0.2
+    restart: always
+    command: redis-cluster-server /usr/local/etc/redis-cluster/redis-cluster.conf
+    volumes:
+      - ./redis-cluster.conf:/usr/local/etc/redis-cluster/redis-cluster.conf
+
+  redis_cluster:
+    build: .
+    command: /bin/bash /usr/local/bin/clusterize.sh
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
